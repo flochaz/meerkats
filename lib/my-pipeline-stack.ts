@@ -20,7 +20,7 @@ export class MyPipelineStack extends Stack {
         actionName: 'GitHub',
         output: new codepipeline.Artifact(),
         oauthToken: SecretValue.secretsManager(gitHubTokenSecretName),
-        owner: 'NetaNir',
+        owner: 'flochaz',
         repo: 'meerkats',
         branch: process.env.BRANCH,
         trigger: codepipeline_actions.GitHubTrigger.POLL,

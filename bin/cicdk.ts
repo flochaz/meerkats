@@ -11,15 +11,15 @@ new MyApplication({
 });
 
 const pipeline = new MyPipelineStack(app, 'PipelineStack', {
-  env: { account: '355421412380', region: 'eu-west-1' },
+  env: { account: '226122282356', region: 'eu-west-1' },
 });
 
 pipeline.addApplication('Beta', new MyApplication({
-  env: { account: '355421412380', region: 'eu-west-1' },
+  env: { account: '203703808712', region: 'eu-west-1' },
 }));
 
 pipeline.addApplication('Gamma', new MyApplication({
-  env: { account: '561462023695', region: 'us-east-2' },
+  env: { account: '153824960622', region: 'us-east-2' },
 }));
 
 app.synth();
