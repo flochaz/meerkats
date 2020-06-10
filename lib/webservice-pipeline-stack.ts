@@ -1,4 +1,5 @@
 import codepipeline = require('@aws-cdk/aws-codepipeline');
+import codecommit = require('@aws-cdk/aws-codecommit');
 import codepipeline_actions = require('@aws-cdk/aws-codepipeline-actions');
 import { Construct, SecretValue, Stack, StackProps } from '@aws-cdk/core';
 import { AppDeliveryPipeline, CdkBuilds, Validation } from "./app-delivery";
@@ -11,18 +12,21 @@ export class WebServicePipelineStack extends Stack {
   constructor(scope: Construct, id: string, props: StackProps) {
     super(scope, id, props);
 
+    const repo = new codecommit.Repository(this, 'Repository' ,{
+      repositoryName: 'cicdTemplate',
+      description: 'A dummy app with cross region/account pipeline', // optional property
+  });
+
     const pipeline = new AppDeliveryPipeline(this, 'Pipeline', {
       // The pipeline name
       pipelineName: 'WebServicePipeline',
 
       // Where the source can be found
-      source: new codepipeline_actions.GitHubSourceAction({
-        actionName: 'GitHub',
+      source: new codepipeline_actions.CodeCommitSourceAction({
+        actionName: 'CodeCommit',
         output: new codepipeline.Artifact(),
-        oauthToken: SecretValue.secretsManager('github-token'),
-        owner: 'flochaz',
-        repo: 'meerkats',
-        trigger: codepipeline_actions.GitHubTrigger.POLL,
+        repository:  repo,
+        trigger: codepipeline_actions.CodeCommitTrigger.POLL
       }),
 
       // How it will be built
