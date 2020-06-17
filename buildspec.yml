@@ -1,0 +1,11 @@
+version: '0.2'
+phases:
+  install:
+    commands:
+        - pwd 
+        - yarn install --frozen-lockfile
+  build:
+    commands: yarn build && npx cdk synth
+artifacts:
+  base-directory: cdk.out
+  files: '**/*'
